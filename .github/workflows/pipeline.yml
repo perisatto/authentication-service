@@ -1,0 +1,45 @@
+name: pipeline
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'    
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file           
+
+      - name: Set up AWS CLI
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install AWS SAM CLI
+        run: |
+          pip install aws-sam-cli
+
+      - name: Build SAM application
+        run: |
+          sam build
+
+      - name: Deploy to AWS
+        env:
+          AWS_COGNITO_CLIENT_ID: ${{ secrets.AWS_COGNITO_CLIENT_ID }}
+          AWS_COGNITO_CLIENT_SECRET: ${{ secrets.AWS_COGNITO_CLIENT_ID }}
+        run: |
+          sam deploy --no-confirm-changeset --stack-name MenuguruAuth --capabilities CAPABILITY_IAM --resolve-s3 --region us-east-1 \
+          --no-confirm-changeset --no-disable-reollback --on-failure ROLLBACK --parameter-overrides AwsCognitoClientId=$AWS_COGNITO_CLIENT_ID \
+          AwsCognitoClientSecret=$AWS_COGNITO_CLIENT_SECRET
