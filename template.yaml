@@ -18,7 +18,7 @@ Globals:
   Api:
     TracingEnabled: true
 Parameters:
-  AwsCognitoClientId:
+  AwsCognito_ClientId:
     Type: String
   AwsCognitoClientSecret:
     Type: String
