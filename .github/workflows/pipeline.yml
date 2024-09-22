@@ -1,13 +1,12 @@
 name: pipeline
 
-on:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+on: [push, workflow_dispatch]
     
 jobs:
   Validate:
+    if: startsWith(github.ref_name, 'master')
+        || startsWith(github.ref_name, 'release/')  
+        || startsWith(github.ref_name, 'develop')  
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,6 +26,7 @@ jobs:
         run: |
           sam validate    
   Build:  
+    if: startsWith(github.ref_name, 'master')  
     needs: Validate
     runs-on: ubuntu-latest
     steps:
