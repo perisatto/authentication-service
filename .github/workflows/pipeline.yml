@@ -41,5 +41,5 @@ jobs:
           AWS_COGNITO_CLIENT_SECRET: ${{ secrets.AWS_COGNITO_CLIENT_ID }}
         run: |
           sam deploy --no-confirm-changeset --stack-name MenuguruAuth --capabilities CAPABILITY_IAM --resolve-s3 --region us-east-1 \
-          --no-confirm-changeset --no-disable-rollback --on-failure ROLLBACK --parameter-overrides AwsCognitoClientId=$AWS_COGNITO_CLIENT_ID \
+          --no-confirm-changeset --on-failure ROLLBACK --parameter-overrides AwsCognitoClientId=$AWS_COGNITO_CLIENT_ID \
           AwsCognitoClientSecret=$AWS_COGNITO_CLIENT_SECRET
