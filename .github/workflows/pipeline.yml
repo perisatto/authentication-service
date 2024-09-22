@@ -1,4 +1,4 @@
-name: Deploy Lambda Function
+name: pipeline
 
 on:
   push:
@@ -15,6 +15,9 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '21'    
+          distribution: 'temurin'
+          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
+          settings-path: ${{ github.workspace }} # location for the settings.xml file           
 
       - name: Set up AWS CLI
         uses: aws-actions/configure-aws-credentials@v1
