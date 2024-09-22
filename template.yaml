@@ -1,0 +1,71 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  menuguru-lambda
+
+  Restaurant orders management authentication lambda for FIAP Tech Challenge (post graduate course test)
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 20
+    MemorySize: 512
+
+    Tracing: Active
+    # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
+    LoggingConfig:
+      LogFormat: JSON
+  Api:
+    TracingEnabled: true
+Parameters:
+  AwsCognitoClientId:
+    Type: String
+  AwsCognitoClientSecret:
+    Type: String
+Resources:
+  MenuguruAuthFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: MenuguruFunction
+      Handler: com.perisatto.fiapprj.menuguru_lambda.CognitoAuthLambda::handleRequest
+      Runtime: java21
+      Architectures:
+      - x86_64
+      MemorySize: 512
+      Environment: # More info about Env Vars: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#environment-object
+        Variables:
+          AWS_COGNITO_CLIENT_ID: !Ref AwsCognitoClientId
+          AWS_COGNITO_CLIENT_SECRET: !Ref AwsCognitoClientSecret
+      Events:
+        MenuguruAuth:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /auth
+            Method: post
+
+  ApplicationResourceGroup:
+    Type: AWS::ResourceGroups::Group
+    Properties:
+      Name:
+        Fn::Sub: ApplicationInsights-SAM-${AWS::StackName}
+      ResourceQuery:
+        Type: CLOUDFORMATION_STACK_1_0
+  ApplicationInsightsMonitoring:
+    Type: AWS::ApplicationInsights::Application
+    Properties:
+      ResourceGroupName:
+        Ref: ApplicationResourceGroup
+      AutoConfigurationEnabled: 'true'
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  MenuguruAuthApi:
+    Description: API Gateway endpoint URL for Prod stage for Menuguru Auth function
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/auth/"
+  MenuguruAuthFunction:
+    Description: Menuguru Auth Lambda Function ARN
+    Value: !GetAtt MenuguruAuthFunction.Arn
+  MenuguruAuthFunctionIamRole:
+    Description: Implicit IAM Role created for Hello World function
+    Value: !GetAtt MenuguruAuthFunctionRole.Arn
