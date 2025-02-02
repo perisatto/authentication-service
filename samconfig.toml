@@ -3,7 +3,7 @@
 version = 0.1
 
 [default.global.parameters]
-stack_name = "menuguru-auth"
+stack_name = "authentication-service"
 
 [default.build.parameters]
 cached = true
@@ -16,8 +16,8 @@ lint = true
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = true
-stack_name = "MenuguruAuth"
-s3_prefix = "MenuguruAuth"
+stack_name = "AuthenticationService"
+s3_prefix = "AuthenticationService"
 region = "us-east-1"
 image_repositories = []
 
