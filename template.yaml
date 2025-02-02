@@ -26,7 +26,7 @@ Resources:
   AuthenticationServiceFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: authentication-service
+      CodeUri: AuthenticationServiceFunction
       Handler: com.perisatto.fiapprj.authentication_service.CognitoAuthLambda::handleRequest
       Runtime: java21
       Architectures:
