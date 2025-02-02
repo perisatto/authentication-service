@@ -2,11 +2,11 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 	<groupId>com.perisatto.fiapprj</groupId>
-	<artifactId>menuguru-lambda</artifactId>    
+	<artifactId>authentication-service</artifactId>    
     <packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>menuguru-lambda</name>
-	<description>Restaurant orders management authentication lambda for FIAP Tech Challenge (post graduate course test)</description>
+	<name>authentication-service</name>
+	<description>Video trimmer for FIAP Tech Challenge (post graduate course test)</description>
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
