@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru_lambda;
+package com.perisatto.fiapprj.authentication_service;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;

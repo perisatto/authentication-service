@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  menuguru-lambda
+  authentication-service
 
-  Restaurant orders management authentication lambda for FIAP Tech Challenge (post graduate course test)
+  Video trimmer for FIAP Tech Challenge (post graduate course test)
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -23,11 +23,11 @@ Parameters:
   AwsCognitoClientSecret:
     Type: String
 Resources:
-  MenuguruAuthFunction:
+  AuthenticationServiceFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: MenuguruFunction
-      Handler: com.perisatto.fiapprj.menuguru_lambda.CognitoAuthLambda::handleRequest
+      CodeUri: authentication-service
+      Handler: com.perisatto.fiapprj.authentication_service.CognitoAuthLambda::handleRequest
       Runtime: java21
       Architectures:
       - x86_64
@@ -37,7 +37,7 @@ Resources:
           AWS_COGNITO_CLIENT_ID: !Ref AwsCognitoClientId
           AWS_COGNITO_CLIENT_SECRET: !Ref AwsCognitoClientSecret
       Events:
-        MenuguruAuth:
+        AuthenticationService:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /auth
@@ -60,12 +60,12 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  MenuguruAuthApi:
-    Description: API Gateway endpoint URL for Prod stage for Menuguru Auth function
+  AuthenticationServiceApi:
+    Description: API Gateway endpoint URL for Prod stage for Authentication Service function
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/auth/"
-  MenuguruAuthFunction:
-    Description: Menuguru Auth Lambda Function ARN
-    Value: !GetAtt MenuguruAuthFunction.Arn
-  MenuguruAuthFunctionIamRole:
+  AuthenticationServiceFunction:
+    Description: Authentication Service Lambda Function ARN
+    Value: !GetAtt AuthenticationServiceFunction.Arn
+  AuthenticationServiceFunctionIamRole:
     Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt MenuguruAuthFunctionRole.Arn
+    Value: !GetAtt AuthenticationServiceFunctionRole.Arn

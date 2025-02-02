@@ -1,4 +1,4 @@
-package com.perisatto.fiapprj.menuguru_lambda;
+package com.perisatto.fiapprj.authentication_service;
 
 public class RequestBodyDTO {
 	private String email;
