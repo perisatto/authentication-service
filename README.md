@@ -1,39 +1,19 @@
-# MenuGuru
 
-Este repositÛrio contÈm os scripts de criaÁ„o de funÁ„o Lambda de autenticaÁ„o da aplicaÁ„o [Menuguru](https://github.com/perisatto/menuguru), que implementa um sistema fictÌcio de gest„o de pedidos para restaurantes como parte do trabalho de avaliaÁ„o do curso de PÛs GraduaÁ„o em Software Architecture da FIAP.
+# VFC - Authentication Service
 
-O MenuGuru tem como objetivo principal registrar e acompanhar o status de pedidos para restaurantes, onde o cliente pode realizar seu pedido e acompanhar o status do mesmo atÈ a retirada.
+Este reposit√≥rio implementa o microservi√ßo Authentication Service de um sistema fict√≠cio de processamento de videos (Video Frame Cut) como parte do trabalho de avalia√ß√£o do curso de P√≥s Gradua√ß√£o em Software Architecture da FIAP.
 
-Funcionalidades:
-* Cadastro e IdentificaÁ„o de Clientes
-* Gest„o de Produtos (criaÁ„o, consulta, ediÁ„o e remoÁ„o)
-* Gest„o de Pedidos (solicitaÁ„o, consulta e finalizaÁ„o de pedidos)
-* IntegraÁ„o com Mercado Pago para processamento dos pagamentos
+O Authentication Service tem como objetivo principal realizar a autentica√ß√£o dos usu√°rios do Video Frame Cut.
 
-# Guia para execuÁ„o do projeto
+## Projetos relacionados
 
-## PrÈ-Requisitos
+O projeto foi estruturado em 8 reposit√≥rios, cada um com o objetivo de armazenar os c√≥digos fontes e scripts de cada estrutura da arquitetura do projeto. Cada reposit√≥rio pode ser acessado nos seguintes links:
+* **Authentication Service:** reposit√≥rio com o c√≥digo fonte Java + template SAM para a cria√ß√£o de fun√ß√£o Lambda utilizada para autentica√ß√£o: (*este reposit√≥rio*)
+* **Request Manager:** reposit√≥rio com o c√≥digo Java da aplica√ß√£o repons√°vel pela gest√£o das solicita√ß√µes de processamento: [https://github.com/perisatto/request-manager](https://github.com/perisatto/request-manager).
+* **User Management:** reposit√≥rio com o c√≥digo Java da aplica√ß√£o respons√°vel pela gest√£o dos usu√°rios: [https://github.com/perisatto/user-management](https://github.com/perisatto/user-management).
+* **File Processor:** reposit√≥rio com o c√≥digo Java da aplica√ß√£o respons√°vel pelo processamento das solicita√ß√µes: [https://github.com/perisatto/file-processor](https://github.com/perisatto/file-processor).
+* **Notification Manager:** reposit√≥rio com o c√≥digo Java da aplica√ß√£o respons√°vel por enviar a notifica√ß√£o para os usu√°rios em caso de erro: [https://github.com/perisatto/notification-manager](https://github.com/perisatto/notification-manager).
 
-* SAM CLI
-* AWS CLI
-
-## ExecuÁ„o
-
-1. Execute o comando para inicializar o Terraform
-
-``` bash
-$ sam validate
-```
-
-2. Execute o comando para validaÁ„o dos scripts
-
-``` bash
-$ sam build
-```
-
-3. Execute o comando para aplicar as alteraÁıes
-
-``` bash
-$ sam deploy
-```
-.
+* **Banco de dados:** reposit√≥rio contendo os scripts de Terraform para cria√ß√£o do banco de dados MySQL executado na AWS RDS: [https://github.com/perisatto/vfc-database](https://github.com/perisatto/vfc-database).
+* **Infraestrutura (Kubernetes):** reposit√≥rio contendo os scripts de Terraform para cria√ß√£o do cluster EKS: [https://github.com/perisatto/videoframecut-kubernetes](https://github.com/perisatto/videoframecut-kubernetes).
+* **API Gateway:** reposit√≥rio contendo os scripts de Terraform para o API Gateway utilizado para expor e garantir valida√ß√£o da autentica√ß√£o das rotas da aplica√ß√£o backend: [https://github.com/perisatto/vfc-api-gateway](https://github.com/perisatto/vfc-api-gateway).
